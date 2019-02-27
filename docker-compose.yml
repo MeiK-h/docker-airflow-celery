@@ -78,8 +78,6 @@ services:
     worker:
         build: .
         restart: always
-        depends_on:
-            - scheduler
         volumes:
             - ./dags:/usr/local/airflow/dags
             # Uncomment to include custom plugins
