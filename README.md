@@ -41,6 +41,15 @@ docker-compose up -d worker
 
 首先配置环境变量，填入已有 MySQL 和 redis 的配置。
 
+```bash
+export MYSQL_HOST=10.2.59.242
+export MYSQL_USER=airflow
+export MYSQL_PASSWORD=airflow
+export MYSQL_DATABASE=airflow
+export REDIS_HOST=10.2.59.242
+export REDIS_PASSWORD=airflow
+```
+
 MySQL 应该修改配置 `explicit_defaults_for_timestamp = 1`
 
 ```bash

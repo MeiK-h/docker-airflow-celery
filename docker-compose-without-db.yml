@@ -28,8 +28,6 @@ services:
     flower:
         build: .
         restart: always
-        depends_on:
-            - redis
         environment:
             MYSQL_HOST:
             MYSQL_USER:
