@@ -33,6 +33,11 @@ then
   AIRFLOW__CORE__LOAD_EXAMPLES=False
 fi
 
+# Install custom python package if requirements.txt is present
+if [ -e "/requirements/requirements.txt" ]; then
+    $(which pip) install -r /requirements/requirements.txt
+fi
+
 # 拼接 Redis 连接字符串
 if [ -n "$REDIS_PASSWORD" ]; then
     REDIS_PREFIX=root:${REDIS_PASSWORD}@

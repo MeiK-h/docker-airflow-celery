@@ -93,6 +93,7 @@ services:
         restart: always
         volumes:
             - ./dags:/usr/local/airflow/dags
+            - ./requirements:/requirements
             # Uncomment to include custom plugins
             # - ./plugins:/usr/local/airflow/plugins
         environment:
