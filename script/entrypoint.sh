@@ -74,12 +74,9 @@ case "$1" in
     exec airflow webserver
     ;;
   worker|scheduler)
-    # To give the webserver time to run initdb.
-    sleep 10
     exec airflow "$@"
     ;;
   flower)
-    sleep 10
     exec airflow "$@"
     ;;
   version)

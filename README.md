@@ -14,6 +14,15 @@ export REDIS_HOST=10.2.59.242
 export REDIS_PASSWORD=airflow
 ```
 
+第一次 `up` 会运行报错（因为 Scheduler 等启动时 MySQL 的初始化还未完成），可以提前初始化数据库：
+
+```bash
+docker-compose up mysql  # 创建 MySQL 库
+^C
+docker-compose up webserver  # initdb 初始化表
+^C
+```
+
 ### Master 节点
 
 ```bash
@@ -26,4 +35,14 @@ Master 节点自带一个 Worker。
 
 ```bash
 docker-compose up -d worker
+```
+
+## 使用已有的 MySQL 和 redis
+
+首先配置环境变量，填入已有 MySQL 和 redis 的配置。
+
+MySQL 应该修改配置 `explicit_defaults_for_timestamp = 1`
+
+```bash
+docker-compose -f docker-compose-without-db.yml up
 ```
