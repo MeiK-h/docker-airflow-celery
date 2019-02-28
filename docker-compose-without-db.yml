@@ -10,6 +10,9 @@ services:
             MYSQL_DATABASE:
             REDIS_HOST:
             REDIS_PASSWORD:
+            AIRFLOW__WEBSERVER__AUTHENTICATE:
+            AIRFLOW_USER:
+            AIRFLOW_PASSWORD:
             LOAD_EX: 'n'
             FERNET_KEY: '46BKJoQYlPPOexq0OhDZnIlNepKFf87WFwLbfzqDDho='
         volumes:
@@ -18,7 +21,7 @@ services:
             # - ./plugins:/usr/local/airflow/plugins
         ports:
             - "8080:8080"
-        command: webserver
+        command: webserver -w 2
         healthcheck:
             test: ["CMD-SHELL", "[ -f /usr/local/airflow/airflow-webserver.pid ]"]
             interval: 30s
@@ -76,4 +79,4 @@ services:
             REDIS_PASSWORD:
             LOAD_EX: 'n'
             FERNET_KEY: '46BKJoQYlPPOexq0OhDZnIlNepKFf87WFwLbfzqDDho='
-        command: worker
+        command: worker -c 8 -cn worker

@@ -38,6 +38,9 @@ services:
             MYSQL_DATABASE:
             REDIS_HOST:
             REDIS_PASSWORD:
+            AIRFLOW__WEBSERVER__AUTHENTICATE:
+            AIRFLOW_USER:
+            AIRFLOW_PASSWORD:
             LOAD_EX: 'n'
             FERNET_KEY: '46BKJoQYlPPOexq0OhDZnIlNepKFf87WFwLbfzqDDho='
         volumes:

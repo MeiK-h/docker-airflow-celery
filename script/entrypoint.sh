@@ -25,7 +25,10 @@ export \
   AIRFLOW__CORE__FERNET_KEY \
   AIRFLOW__CORE__LOAD_EXAMPLES \
   AIRFLOW__CORE__SQL_ALCHEMY_CONN \
-
+  AIRFLOW__WEBSERVER__AUTHENTICATE \
+  AIRFLOW__WEBSERVER__AUTH_BACKEND \
+  AIRFLOW_USER \
+  AIRFLOW_PASSWORD \
 
 # Load DAGs exemples (default: No)
 if [[ -z "$AIRFLOW__CORE__LOAD_EXAMPLES" && "${LOAD_EX:=n}" == n ]]
@@ -61,6 +64,7 @@ wait_for_port() {
 }
 
 # 配置相应的连接配置
+AIRFLOW__WEBSERVER__AUTH_BACKEND="airflow.contrib.auth.backends.password_auth"
 AIRFLOW__CORE__SQL_ALCHEMY_CONN="mysql+mysqldb://$MYSQL_USER:$MYSQL_PASSWORD@$MYSQL_HOST:$MYSQL_PORT/$MYSQL_DATABASE"
 AIRFLOW__CELERY__RESULT_BACKEND="db+mysql://$MYSQL_USER:$MYSQL_PASSWORD@$MYSQL_HOST:$MYSQL_PORT/$MYSQL_DATABASE"
 AIRFLOW__CELERY__BROKER_URL="redis://$REDIS_PREFIX$REDIS_HOST:$REDIS_PORT/1"
@@ -71,6 +75,7 @@ wait_for_port "Redis" "$REDIS_HOST" "$REDIS_PORT"
 case "$1" in
   webserver)
     airflow initdb
+    python -c "import airflow; from airflow import models, settings; from airflow.contrib.auth.backends.password_auth import PasswordUser; user = PasswordUser(models.User()); user.username = '$AIRFLOW_USER'; user.email = 'airflow@example.com'; user.password = '$AIRFLOW_PASSWORD'; session = settings.Session(); session.add(user); session.commit(); session.close(); print('Create Airflow User Success')"
     exec airflow webserver
     ;;
   worker|scheduler)

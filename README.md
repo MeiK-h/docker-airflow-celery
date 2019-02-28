@@ -37,6 +37,14 @@ Master 节点自带一个 Worker。
 docker-compose up -d worker
 ```
 
+## 为 WebServer 启用密码
+
+```bash
+export AIRFLOW__WEBSERVER__AUTHENTICATE=True
+export AIRFLOW_USER=airflow
+export AIRFLOW_PASSWORD=airflow
+```
+
 ## 使用已有的 MySQL 和 redis
 
 首先配置环境变量，填入已有 MySQL 和 redis 的配置。
