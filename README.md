@@ -63,3 +63,15 @@ MySQL 应该修改配置 `explicit_defaults_for_timestamp = 1`
 ```bash
 docker-compose -f docker-compose-without-db.yml up
 ```
+
+## 自定义 WebServer 个数、Worker 个数与 Worker 的名称
+
+Worker 的名称会在 flower 中显示。
+
+在配置较低的云服务器上，可以通过降低 Worker 和 WebServer 的个数来减少系统压力。
+
+```shell
+export AIRFLOW_WEBSERVER_NUMBER=1
+export AIRFLOW_WORKER_PROCESS_NUMBER=2
+export AIRFLOW_WORKER_NAME=worker
+```

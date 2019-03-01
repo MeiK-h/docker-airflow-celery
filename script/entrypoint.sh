@@ -75,7 +75,7 @@ wait_for_port "Redis" "$REDIS_HOST" "$REDIS_PORT"
 case "$1" in
   webserver)
     airflow initdb
-    python -c "import airflow; from airflow import models, settings; from airflow.contrib.auth.backends.password_auth import PasswordUser; user = PasswordUser(models.User()); user.username = '$AIRFLOW_USER'; user.email = 'airflow@example.com'; user.password = '$AIRFLOW_PASSWORD'; session = settings.Session(); session.add(user); session.commit(); session.close(); print('Create Airflow User Success')"
+    python -c "import airflow; from airflow import models, settings; from airflow.contrib.auth.backends.password_auth import PasswordUser; user = PasswordUser(models.User()); user.username = '$AIRFLOW_USER'; user.email = 'airflow@example.com'; user.password = '$AIRFLOW_PASSWORD'; session = settings.Session(); session.add(user); session.commit(); session.close(); print('Create Airflow User Success: ($AIRFLOW_USER, $AIRFLOW_PASSWORD)')"
     exec airflow webserver
     ;;
   worker|scheduler)
