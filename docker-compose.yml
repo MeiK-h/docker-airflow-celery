@@ -1,4 +1,4 @@
-version: '2.1'
+version: '2.2'
 services:
     redis:
         image: 'redis:3.2.7'
@@ -88,13 +88,13 @@ services:
             REDIS_HOST:
             REDIS_PASSWORD:
             LOAD_EX: 'n'
-        command: scheduler
+        command: scheduler --do_pickle
 
     worker:
         build: .
         restart: always
         volumes:
-            - ./dags:/usr/local/airflow/dags
+            # - ./dags:/usr/local/airflow/dags
             - ./requirements:/requirements
             # Uncomment to include custom plugins
             # - ./plugins:/usr/local/airflow/plugins
@@ -106,4 +106,4 @@ services:
             REDIS_HOST:
             REDIS_PASSWORD:
             LOAD_EX: 'n'
-        command: worker -c ${AIRFLOW_WORKER_PROCESS_NUMBER:-8} -cn ${AIRFLOW_WORKER_NAME:-"worker"}
+        command: worker --do_pickle -c ${AIRFLOW_WORKER_PROCESS_NUMBER:-8} -cn ${AIRFLOW_WORKER_NAME:-"worker"}
